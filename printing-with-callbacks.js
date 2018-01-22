@@ -1,7 +1,8 @@
-// accepts a paramater, options, which is an object that contains values
-// for the host and path, exactly like requestOptions.
-function getAndPrintHTML (options) {
-var https = require('https');
+// The function definition will now accept a callback as a second parameter.
+// The function body will invoke (call) the callback when the data is
+// fully received,
+function getHTML (options, callback) {
+  var https = require('https');
 
   https.get(requestOptions, function (response) {
     var stringBuffer = "";
@@ -20,16 +21,19 @@ var https = require('https');
     // the callback is invoked when all of the data has been received
     // (the `end` of the stream)
     response.on('end', function() {
-      console.log("stringBuffer: ", stringBuffer);
-      console.log('Response stream complete.');
+      printHTML(stringBuffer);
     });
   });
 
 }
 
+function printHTML (html) {
+  console.log(html);
+}
+
 var requestOptions = {
   host: 'sytantris.github.io',
-  path: '/http-examples/step3.html'
+  path: '/http-examples/step4.html'
 };
 
-getAndPrintHTML();
+getHTML();
