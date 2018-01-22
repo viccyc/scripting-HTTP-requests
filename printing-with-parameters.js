@@ -1,20 +1,16 @@
-// function uses a buffering technique to append each chunk of data
-// to a variable as it is received, and then console.log the data once
-// all of the data has been received.
-
-function getAndPrintHTML () {
-
+// accepts a paramater, options, which is an object that contains values
+// for the host and path, exactly like requestOptions.
+function getAndPrintHTML (options) {
 var https = require('https');
-
-  var requestOptions = {
-    host: 'sytantris.github.io',
-    path: '/http-examples/step2.html'
-  };
 
   https.get(requestOptions, function (response) {
     var stringBuffer = "";
     // set encoding of received data to UTF-8
     response.setEncoding('utf8');
+
+    response.on('error', function (err) {
+      console.log("Error: ", err);
+    });
 
     // the callback is invoked when a `data` chunk is received
     response.on('data', function (data) {
@@ -27,7 +23,13 @@ var https = require('https');
       console.log("stringBuffer: ", stringBuffer);
       console.log('Response stream complete.');
     });
-  });
+  });  /* Add your code here */
+
 }
+
+var requestOptions = {
+  host: 'sytantris.github.io',
+  path: '/http-examples/step3.html'
+};
 
 getAndPrintHTML();
